@@ -1,0 +1,24 @@
+<Dashboard>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "Voltage: " + root.voltage
+        Label:
+            text: "Current: " + root.current
+        Label:
+            text: "Power: " + root.power
+        Label:
+            text: "Energy: " + root.energy
+        Button:
+            text: "View Graphs"
+            on_press: app.root.current = 'graph'
+
+<GraphScreen>:
+    graph_layout: graph_box
+
+    BoxLayout:
+        id: graph_box
+        orientation: 'vertical'
+        Button:
+            text: "Back to Dashboard"
+            on_press: app.root.current = 'dashboard'
