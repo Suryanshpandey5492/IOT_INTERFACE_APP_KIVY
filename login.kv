@@ -1,0 +1,23 @@
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        
+        Label:
+            text: 'Login'
+            font_size: 32
+            
+        TextInput:
+            id: username
+            hint_text: 'Username'
+            multiline: False
+            
+        TextInput:
+            id: password
+            hint_text: 'Password'
+            password: True
+            multiline: False
+            
+        Button:
+            text: 'Login'
+            on_press: root.validate_login(username.text, password.text)
