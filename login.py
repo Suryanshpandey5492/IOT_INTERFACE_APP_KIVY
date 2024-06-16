@@ -5,7 +5,7 @@ from firebase_admin import credentials, auth
 from firebase_admin._auth_utils import EmailAlreadyExistsError, UserNotFoundError
 
 # Initialize Firebase
-cred = credentials.Certificate("C:\Users\sampa\Desktop\iotinteract-1a1b9-firebase-adminsdk-lynn1-c2a0d8520e.json")
+cred = credentials.Certificate("C:/Users/sampa/Desktop/Project/IoT_APP/iotinteract-1a1b9-firebase-adminsdk-lynn1-c2a0d8520e.json")
 firebase_admin.initialize_app(cred)
 
 class LoginScreen(Screen):
