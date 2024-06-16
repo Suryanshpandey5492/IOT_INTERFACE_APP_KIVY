@@ -1,23 +1,40 @@
 <LoginScreen>:
+    username: username
+    password: password
+
     BoxLayout:
         orientation: 'vertical'
-        padding: [20, 20, 20, 20]
-        
+        padding: 10
+        spacing: 10
+
         Label:
-            text: 'Login'
-            font_size: 32
-            
+            text: 'Username'
         TextInput:
             id: username
-            hint_text: 'Username'
             multiline: False
-            
+            hint_text: 'Enter your email'
+
+        Label:
+            text: 'Password'
         TextInput:
             id: password
-            hint_text: 'Password'
-            password: True
             multiline: False
-            
-        Button:
-            text: 'Login'
-            on_press: root.validate_login(username.text, password.text)
+            password: True
+            hint_text: 'Enter your password'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '48dp'
+            spacing: 10
+
+            Button:
+                text: 'Login'
+                on_press: root.login()
+
+            Button:
+                text: 'Sign Up'
+                on_press: root.signup()
+
+        Label:
+            text: root.error_message
+            color: 1, 0, 0, 1  # Red color for error messages

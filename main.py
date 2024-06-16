@@ -2,21 +2,23 @@ import sys
 import os
 import requests
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
 from kivy_garden.graph import Graph, LinePlot
 import numpy as np
-from login import LoginScreen  # Import LoginScreen from login.py
+from login import LoginScreen  # Ensure LoginScreen is correctly imported
 
 # Ensure the garden package path is added to sys.path
 garden_path = os.path.join(os.path.expanduser("~"), ".kivy", "garden")
 if garden_path not in sys.path:
     sys.path.append(garden_path)
+
+# Define global variables for API URL and other constants
+API_URL = "http://apps.openioe.in/openioe/api/"
+DEVICE_ID = "9lpqiYnhjfesPnWTvi3l"
+DATA_KEYS = ["Voltage", "Current", "Power", "Energy"]
 
 class Dashboard(Screen):
     voltage = StringProperty("0")
@@ -31,20 +33,21 @@ class Dashboard(Screen):
 
     def update_data(self, dt):
         try:
-            response = requests.get("http://apps.openioe.in/openioe/api/showdevicejson/9lpqiYnhjfesPnWTvi3l/164/182")
+            response = requests.get(f"{API_URL}/showdevicejson/{DEVICE_ID}/164/182")
             if response.status_code == 200:
                 data = response.json()
-                self.voltage = str(np.mean(data["Voltage"]))
-                self.current = str(np.mean(data["Current"]))
-                self.power = str(np.mean(data["Power"]))
-                self.energy = str(np.mean(data["Energy"]))
+                for key in DATA_KEYS:
+                    if key in data:
+                        setattr(self, key.lower(), str(np.mean(data[key])))
+                    else:
+                        print(f"Key '{key}' not found in API response.")
             else:
-                print("Failed to fetch data")
-        except Exception as e:
+                print(f"Failed to fetch data. Status code: {response.status_code}")
+        except requests.RequestException as e:
             print(f"Error fetching data: {e}")
 
 class GraphScreen(Screen):
-    graph_layout = ObjectProperty()
+    graph_layout = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(GraphScreen, self).__init__(**kwargs)
@@ -62,28 +65,34 @@ class GraphScreen(Screen):
             xmin=0,
             xmax=10,
             ymin=0,
-            ymax=100
+            ymax=100,
+            background_color=[0.9, 0.9, 0.9, 1],
+            border_color=[0, 0, 0, 1]
         )
-        self.graph_layout.add_widget(self.graph)
-        self.plots = {}  # Keep track of plots and their labels
-        Clock.schedule_interval(self.update_data, 10)  # Update data every 10 seconds
+        self.plots = []  # Initialize list to store LinePlot instances
+        Clock.schedule_once(self.add_graph_to_layout)
+
+    def add_graph_to_layout(self, dt):
+        if self.graph_layout:
+            self.graph_layout.add_widget(self.graph)
+            Clock.schedule_interval(self.update_data, 10)  # Update graph data every 10 seconds
+        else:
+            print("graph_layout is not initialized")
 
     def update_data(self, dt):
         try:
-            response = requests.get("http://apps.openioe.in/openioe/api/showdevicejson/9lpqiYnhjfesPnWTvi3l/164/182")
+            response = requests.get(f"{API_URL}/showdevicejson/{DEVICE_ID}/164/182")
             if response.status_code == 200:
                 data = response.json()
                 self.plot_graph(data)
             else:
-                print("Failed to fetch data")
-        except Exception as e:
+                print(f"Failed to fetch data. Status code: {response.status_code}")
+        except requests.RequestException as e:
             print(f"Error fetching data: {e}")
 
     def plot_graph(self, data):
-        # Remove existing plots and labels
-        for plot, label in self.plots.values():
+        for plot in self.plots:
             self.graph.remove_plot(plot)
-            self.remove_widget(label)
         self.plots.clear()
 
         colors = {
@@ -92,34 +101,36 @@ class GraphScreen(Screen):
             "Power": [0, 0, 1, 1],
             "Energy": [1, 1, 0, 1]
         }
-
-        # Assuming 'data' is a dict with measurement names as keys and lists of values as values
+        
         for key, value in data.items():
-            if isinstance(value, list):  # Check if value is a list
-                try:
-                    x = list(range(len(value)))
-                    y = [float(v) for v in value]
-                    plot = LinePlot(line_width=1.5, color=colors.get(key, [1, 1, 1, 1]))  # You can adjust the color
-                    plot.points = list(zip(x, y))
-                    self.graph.add_plot(plot)
-
-                    # Add label near the last point of the plot
-                    label = Label(
-                        text=key,
-                        size_hint=(None, None),
-                        size=(100, 30),
-                        pos=(self.graph.pos[0] + (len(x)-1) * self.graph.width / 10,
-                             self.graph.pos[1] + y[-1] * self.graph.height / 100)
-                    )
-                    self.add_widget(label)
-                    self.plots[key] = (plot, label)
-                except ValueError as e:
-                    print(f"Error plotting data for {key}: {e}")
+            if key in DATA_KEYS and isinstance(value, list):
+                x = list(range(len(value)))
+                y = [float(v) for v in value]
+                plot = LinePlot(line_width=1.5, color=colors.get(key, [1, 1, 1, 1]))
+                plot.points = list(zip(x, y))
+                self.graph.add_plot(plot)
+                self.plots.append(plot)
             else:
-                print(f"Expected a list for {key}, but got {type(value)} instead.")
+                print(f"Unexpected data format for '{key}'")
+
+    def send_dummy_data(self, dt=None):
+        data = {
+            "Voltage": [np.random.randint(200, 250) for _ in range(10)],
+            "Current": [np.random.uniform(2, 4) for _ in range(10)],
+            "Power": [np.random.uniform(90, 100) for _ in range(10)],
+            "Energy": [np.random.randint(60, 80) for _ in range(10)]
+        }
+        try:
+            response = requests.post(f"{API_URL}/updatedevicejson/{DEVICE_ID}/164/182/", json=data)
+            print(f"Status Code: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Error sending data: {e}")
 
 class MyApp(App):
     def build(self):
+        Builder.load_file('login.kv')
+        Builder.load_file('my.kv')
+
         sm = ScreenManager()
         sm.add_widget(LoginScreen(name='login'))
         sm.add_widget(Dashboard(name='dashboard'))

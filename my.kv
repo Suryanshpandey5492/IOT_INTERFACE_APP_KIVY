@@ -1,24 +1,49 @@
+#:import LinePlot kivy_garden.graph.LinePlot
+#:import Graph kivy_garden.graph.Graph
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+ScreenManager:
+    transition: FadeTransition()
+
+    LoginScreen:
+        name: 'login'
+
+    Dashboard:
+        name: 'dashboard'
+
+    GraphScreen:
+        name: 'graph'
+
 <Dashboard>:
     BoxLayout:
         orientation: 'vertical'
         Label:
-            text: "Voltage: " + root.voltage
+            text: "Dashboard"
+            size_hint_y: None
+            height: '48dp'
         Label:
-            text: "Current: " + root.current
+            text: f"Voltage: {root.voltage}"
         Label:
-            text: "Power: " + root.power
+            text: f"Current: {root.current}"
         Label:
-            text: "Energy: " + root.energy
+            text: f"Power: {root.power}"
+        Label:
+            text: f"Energy: {root.energy}"
         Button:
-            text: "View Graphs"
-            on_press: app.root.current = 'graph'
+            text: 'Go to Graphs'
+            size_hint_y: None
+            height: '48dp'
+            on_press: root.manager.current = 'graph'
 
 <GraphScreen>:
-    graph_layout: graph_box
-
+    graph_layout: graph_layout_id
     BoxLayout:
-        id: graph_box
         orientation: 'vertical'
-        Button:
-            text: "Back to Dashboard"
-            on_press: app.root.current = 'dashboard'
+        BoxLayout:
+            id: graph_layout_id
+            size_hint_y: 0.9
+        BoxLayout:
+            size_hint_y: 0.1
+            Button:
+                text: "Go to Dashboard"
+                on_press: app.root.current = 'dashboard'
