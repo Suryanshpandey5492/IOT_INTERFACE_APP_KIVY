@@ -1,0 +1,26 @@
+<Dashboard>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Dashboard'
+        GridLayout:
+            cols: 2
+            Label:
+                text: 'Voltage:'
+            Label:
+                text: root.voltage
+            Label:
+                text: 'Current:'
+            Label:
+                text: root.current
+            Label:
+                text: 'Power:'
+            Label:
+                text: root.power
+            Label:
+                text: 'Energy:'
+            Label:
+                text: root.energy
+        Button:
+            text: 'Go to Graph'
+            on_press: root.manager.current = 'graph'

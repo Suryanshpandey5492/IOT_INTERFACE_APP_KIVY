@@ -39,7 +39,8 @@ class LoginScreen(Screen):
         password = self.password.text.strip()
 
         if not email or not password:
-            self.error_message = "Email and password cannot be empty."
+            self.manager.current = 'dashboard'
+            #self.error_message = "Email and password cannot be empty."
             return
 
         try:
