@@ -31,47 +31,8 @@
                 text: 'Select Data Series:'
                 size_hint_x: 0.3
 
-            BoxLayout:
-                orientation: 'vertical'
+            Button:
+                id: dropdown_button
+                text: 'Voltage'
+                on_press: root.open_dropdown(self)
                 size_hint_x: 0.7
-                spacing: 5
-
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 5
-                    CheckBox:
-                        group: 'data_series'
-                        on_active: root.update_selected_data_series(self, self.active, 'Voltage')
-                    Label:
-                        text: 'Voltage'
-                        on_touch_down: if self.collide_point(*args[1].pos): root.update_selected_data_series(self, True, 'Voltage')
-
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 5
-                    CheckBox:
-                        group: 'data_series'
-                        on_active: root.update_selected_data_series(self, self.active, 'Current')
-                    Label:
-                        text: 'Current'
-                        on_touch_down: if self.collide_point(*args[1].pos): root.update_selected_data_series(self, True, 'Current')
-                
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 5
-                    CheckBox:
-                        group: 'data_series'
-                        on_active: root.update_selected_data_series(self, self.active, 'Power')
-                    Label:
-                        text: 'Power'
-                        on_touch_down: if self.collide_point(*args[1].pos): root.update_selected_data_series(self, True, 'Power')
-                
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 5
-                    CheckBox:
-                        group: 'data_series'
-                        on_active: root.update_selected_data_series(self, self.active, 'Energy')
-                    Label:
-                        text: 'Energy'
-                        on_touch_down: if self.collide_point(*args[1].pos): root.update_selected_data_series(self, True, 'Energy')
