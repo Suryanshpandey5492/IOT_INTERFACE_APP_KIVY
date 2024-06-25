@@ -1,0 +1,51 @@
+<Sidebar>:
+    orientation: 'vertical'
+    size_hint_x: None
+    width: 260
+    padding: [10, 10, 10, 10]
+    spacing: 20
+    canvas.before:
+        Color:
+            rgba: 0.121, 0.161, 0.216, 1  # #1f2937
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: self.minimum_height
+        padding: [0, 20, 0, 0]  # Add top padding to move everything down slightly
+        spacing: 10
+
+        MDLabel:
+            text: 'Energy Monitor'
+            size_hint_y: None
+            height: 50
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            font_style: 'H6'  # Use a Material Design font style
+            bold: True  # Make the text bold
+            padding_y: 10
+
+        MDRaisedButton:
+            text: 'Dashboard'
+            on_press: root.change_screen('dashboard')
+            md_bg_color: 0.121, 0.161, 0.216, 1
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_y: None
+            height: 50  # Adjust button height to match the design
+
+        MDRaisedButton:
+            text: 'Graph'
+            on_press: root.change_screen('graph')
+            md_bg_color: 0.121, 0.161, 0.216, 1
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_y: None
+            height: 50  # Adjust button height to match the design
+
+    # Spacer to push elements to the top
+    BoxLayout:
+        size_hint_y: 1

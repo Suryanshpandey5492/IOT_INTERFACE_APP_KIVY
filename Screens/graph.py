@@ -1,6 +1,8 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty, StringProperty
+import sys
+sys.path.append('C:\\Users\\jerry\\.kivy\\garden')
 from kivy_garden.graph import Graph, LinePlot
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button

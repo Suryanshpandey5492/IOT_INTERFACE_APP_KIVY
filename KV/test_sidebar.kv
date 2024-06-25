@@ -1,0 +1,14 @@
+BoxLayout:
+    orientation: 'horizontal'
+
+    Sidebar:  # Add the Sidebar on the left
+        id: sidebar
+
+    BoxLayout:  # Empty space on the right
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.9, 0.9, 0.9, 1  # Light gray color for visibility
+            Rectangle:
+                pos: self.pos
+                size: self.size

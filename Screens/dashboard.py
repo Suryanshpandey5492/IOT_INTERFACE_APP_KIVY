@@ -25,3 +25,5 @@ class Dashboard(Screen):
                     print(f"Key '{key}' not found in API response.")
         else:
             print("Failed to fetch data.")
+
+#from Screens.sidebar import Sidebar
