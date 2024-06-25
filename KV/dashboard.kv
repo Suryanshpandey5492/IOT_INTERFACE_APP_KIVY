@@ -2,107 +2,96 @@
 #:import dp kivy.metrics.dp
 
 <Dashboard>:
-    canvas.before:
-        Color:
-            rgba: (242 / 255.0, 244 / 255.0, 246 / 255.0, 1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
     BoxLayout:
-        orientation: 'vertical'
-        padding: '20dp'
-        spacing: '20dp'
+        orientation: 'horizontal'
 
-        MDLabel:
-            text: 'Dashboard'
-            font_style: 'H4'
-            size_hint_y: None
-            height: self.texture_size[1] + dp(20)
-            halign: 'center'
-            valign: 'middle'
-
-        GridLayout:
-            cols: 2
-            spacing: '20dp'
-            padding: '20dp'
-            size_hint: 1, 1
-
-            MDCard:
-                size_hint: None, None
-                size: dp(200), dp(150)
-                md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: '10dp'
-                    spacing: '10dp'
-                    MDLabel:
-                        text: 'Voltage:'
-                        theme_text_color: 'Primary'
-                    MDLabel:
-                        text: root.voltage
-                        theme_text_color: 'Secondary'
-
-            MDCard:
-                size_hint: None, None
-                size: dp(200), dp(150)
-                md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: '10dp'
-                    spacing: '10dp'
-                    MDLabel:
-                        text: 'Current:'
-                        theme_text_color: 'Primary'
-                    MDLabel:
-                        text: root.current
-                        theme_text_color: 'Secondary'
-
-            MDCard:
-                size_hint: None, None
-                size: dp(200), dp(150)
-                md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: '10dp'
-                    spacing: '10dp'
-                    MDLabel:
-                        text: 'Power:'
-                        theme_text_color: 'Primary'
-                    MDLabel:
-                        text: root.power
-                        theme_text_color: 'Secondary'
-
-            MDCard:
-                size_hint: None, None
-                size: dp(200), dp(150)
-                md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: '10dp'
-                    spacing: '10dp'
-                    MDLabel:
-                        text: 'Energy:'
-                        theme_text_color: 'Primary'
-                    MDLabel:
-                        text: root.energy
-                        theme_text_color: 'Secondary'
-
-        Widget:
-            size_hint_y: None
-            height: dp(20)
+        Sidebar:  # Add the Sidebar on the left
+            size_hint_x: None
+            width: dp(200)
 
         BoxLayout:
-            size_hint_y: None
-            height: dp(50)
-            Widget:
-                size_hint_x: None
-                width: dp(20)
-            MDRaisedButton:
-                text: 'Go to Graph'
-                on_press: root.manager.current = 'graph'
-                size_hint_x: None
-                width: dp(200)
-            Widget:
-                size_hint_x: None
-                width: dp(20)
+            orientation: 'vertical'
+            padding: '20dp'
+            spacing: '20dp'
+
+            canvas.before:
+                Color:
+                    rgba: (242 / 255.0, 244 / 255.0, 246 / 255.0, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDLabel:
+                text: 'Dashboard'
+                font_style: 'H4'
+                size_hint_y: None
+                height: self.texture_size[1] + dp(20)
+                halign: 'center'
+                valign: 'middle'
+
+            GridLayout:
+                cols: 2
+                spacing: '20dp'
+                padding: '20dp'
+                size_hint: 1, 1
+
+                MDCard:
+                    size_hint: None, None
+                    size: dp(200), dp(150)
+                    md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: '10dp'
+                        spacing: '10dp'
+                        MDLabel:
+                            text: 'Voltage:'
+                            theme_text_color: 'Primary'
+                        MDLabel:
+                            text: root.voltage
+                            theme_text_color: 'Secondary'
+
+                MDCard:
+                    size_hint: None, None
+                    size: dp(200), dp(150)
+                    md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: '10dp'
+                        spacing: '10dp'
+                        MDLabel:
+                            text: 'Current:'
+                            theme_text_color: 'Primary'
+                        MDLabel:
+                            text: root.current
+                            theme_text_color: 'Secondary'
+
+                MDCard:
+                    size_hint: None, None
+                    size: dp(200), dp(150)
+                    md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: '10dp'
+                        spacing: '10dp'
+                        MDLabel:
+                            text: 'Power:'
+                            theme_text_color: 'Primary'
+                        MDLabel:
+                            text: root.power
+                            theme_text_color: 'Secondary'
+
+                MDCard:
+                    size_hint: None, None
+                    size: dp(200), dp(150)
+                    md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: '10dp'
+                        spacing: '10dp'
+                        MDLabel:
+                            text: 'Energy:'
+                            theme_text_color: 'Primary'
+                        MDLabel:
+                            text: root.energy
+                            theme_text_color: 'Secondary'
+

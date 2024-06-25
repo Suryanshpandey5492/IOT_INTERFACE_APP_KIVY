@@ -46,6 +46,7 @@ class TestApp(MDApp):
         return LoginScreen()
 
     def build_test_dashboard(self):
+        Builder.load_file('kv/sidebar.kv')  # Load sidebar.kv because it's used in the dashboard
         Builder.load_file('kv/dashboard.kv')
         return Dashboard()
 
