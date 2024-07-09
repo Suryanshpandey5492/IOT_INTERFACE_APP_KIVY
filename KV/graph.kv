@@ -1,38 +1,33 @@
 <GraphScreen>:
     graph_layout: graph_layout
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'horizontal'
+        
+        Sidebar:
+            size_hint_x: None
+            width: dp(200)
         
         BoxLayout:
-            id: graph_layout
-            size_hint_y: 0.7  # Adjust as needed for your layout
-            padding: 10
-        
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint_y: 0.1  # Adjust as needed for your layout
-            padding: 10
-
-            Button:
-                text: 'Send Dummy Data'
-                on_press: root.send_dummy_data()
+            orientation: 'vertical'
             
-            Button:
-                text: 'Back to Dashboard'
-                on_press: root.manager.current = 'dashboard'
-        
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint_y: 0.2  # Adjust as needed for your layout
-            padding: 10
-            spacing: 10
+            MDBoxLayout:
+                id: graph_layout
+                size_hint_y: 0.7  # Adjust as needed for your layout
+                padding: dp(10)
+            
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: 0.2  # Adjust as needed for your layout
+                padding: dp(10)
+                spacing: dp(10)
 
-            Label:
-                text: 'Select Data Series:'
-                size_hint_x: 0.3
+                MDLabel:
+                    text: 'Select Data Series:'
+                    size_hint_x: 0.3
 
-            Button:
-                id: dropdown_button
-                text: 'Voltage'
-                on_press: root.open_dropdown(self)
-                size_hint_x: 0.7
+                MDRaisedButton:
+                    id: dropdown_button
+                    text: 'Voltage'
+                    on_press: root.open_dropdown(self)
+                    size_hint_x: 0.7
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}

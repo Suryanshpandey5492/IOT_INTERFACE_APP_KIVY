@@ -1,13 +1,12 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty, StringProperty
-import sys
-sys.path.append('C:\\Users\\jerry\\.kivy\\garden')
 from kivy_garden.graph import Graph, LinePlot
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from api import fetch_data, send_dummy_data, DATA_KEYS
 import numpy as np
+from kivymd.uix.card import MDCard
 
 class GraphScreen(Screen):
     graph_layout = ObjectProperty(None)
@@ -30,6 +29,7 @@ class GraphScreen(Screen):
             y_ticks_major=10,
             y_grid_label=True,
             x_grid_label=True,
+            label_options={'color': [0, 0, 0, 1], 'bold': True},  # Set label color to black
             padding=5,
             xlog=False,
             ylog=False,
