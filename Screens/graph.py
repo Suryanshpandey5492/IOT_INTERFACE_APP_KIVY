@@ -45,7 +45,7 @@ class GraphScreen(Screen):
         self.data_history = {key: [] for key in DATA_KEYS}
         self.last_fetched_data = None
         Clock.schedule_once(self.add_graph_to_layout)
-        self.update_interval = 1.7  # Update interval in seconds
+        self.update_interval = 2  # Update interval in seconds
         Clock.schedule_interval(self.update_data, self.update_interval)
 
     def add_graph_to_layout(self, dt):

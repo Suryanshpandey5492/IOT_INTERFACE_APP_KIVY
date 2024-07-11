@@ -1,40 +1,124 @@
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDCheckbox kivymd.uix.selectioncontrol.MDCheckbox
+#:import MDIcon kivymd.uix.label.MDIcon
+#:import MDTextButton kivymd.uix.button.MDTextButton
+
 <LoginScreen>:
     username: username
     password: password
+    error_message: error_message_label
+    show_password: show_password_checkbox
 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 10
-        spacing: 10
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
 
-        Label:
-            text: 'Username'
-        TextInput:
-            id: username
-            multiline: False
-            hint_text: 'Enter your email'
+        MDCard:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: dp(400), dp(420)
+            elevation: 10
+            padding: dp(20)
+            spacing: dp(20)
+            md_bg_color: 1, 1, 1, 1
+            border_radius: [dp(10), dp(10), 0, 0]
+            shadow_color: 0, 0, 0, 0.2
+            pos_hint: {"center_y": 0.9}
 
-        Label:
-            text: 'Password'
-        TextInput:
-            id: password
-            multiline: False
-            password: True
-            hint_text: 'Enter your password'
+            MDLabel:
+                text: "Sign in to our platform"
+                theme_text_color: "Primary"
+                halign: "center"
+                font_style: "H5"
+                size_hint_y: None
+                height: self.texture_size[1]
 
-        BoxLayout:
-            size_hint_y: None
-            height: '48dp'
-            spacing: 10
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(20)
+                pos_hint: {'center_x': 0.5}
 
-            Button:
-                text: 'Login'
-                on_press: root.login()
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: (1, None)
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5}
+                    padding: [dp(20), 0]
 
-            Button:
-                text: 'Sign Up'
-                on_press: root.signup()
+                    MDIcon:
+                        icon: "email"
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {'center_y': 0.5}
 
-        Label:
-            text: root.error_message
-            color: 1, 0, 0, 1  # Red color for error messages
+                    MDTextField:
+                        id: username
+                        hint_text: "Your Email"
+                        mode: "rectangle"
+                        size_hint: (1, None)
+                        height: dp(48)
+
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: (1, None)
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5}
+                    padding: [dp(20), 0]
+
+                    MDIcon:
+                        icon: "lock"
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {'center_y': 0.5}
+
+                    MDTextField:
+                        id: password
+                        hint_text: "Your Password"
+                        password: True
+                        mode: "rectangle"
+                        size_hint: (1, None)
+                        height: dp(48)
+
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: (1, None)
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5}
+                    padding: [dp(20), 0]
+
+                    MDCheckbox:
+                        id: show_password_checkbox
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {'center_y': 0.5}
+                        on_active: root.toggle_password_visibility(self, self.active)
+
+                    MDLabel:
+                        text: "Show Password"
+                        size_hint_x: None
+                        width: dp(250)
+                        pos_hint: {'center_y': 0.5}
+
+                MDLabel:
+                    id: error_message_label
+                    text: ""
+                    theme_text_color: "Error"
+                    halign: "center"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDRaisedButton:
+                    text: "login"
+                    on_release: root.login()
+                    size_hint_x: 0.5
+                    pos_hint: {'center_x': 0.5}
+
+                MDTextButton:
+                    text: "sign up"
+                    on_release: root.signup()
+                    size_hint_x: 0.5
+                    pos_hint: {'center_x': 0.5}
