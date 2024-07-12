@@ -1,13 +1,12 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty, StringProperty
-import sys
-sys.path.append('C:\\Users\\jerry\\.kivy\\garden')
 from kivy_garden.graph import Graph, LinePlot
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from api import fetch_data, send_dummy_data, DATA_KEYS
 import numpy as np
+from kivymd.uix.card import MDCard
 
 class GraphScreen(Screen):
     graph_layout = ObjectProperty(None)
@@ -30,6 +29,7 @@ class GraphScreen(Screen):
             y_ticks_major=10,
             y_grid_label=True,
             x_grid_label=True,
+            label_options={'color': [0, 0, 0, 1], 'bold': True},  # Set label color to black
             padding=5,
             xlog=False,
             ylog=False,
@@ -44,12 +44,21 @@ class GraphScreen(Screen):
         self.graph.add_plot(self.plot)
         self.data_history = {key: [] for key in DATA_KEYS}
         self.last_fetched_data = None
+        self.update_interval = 1  # Update interval in seconds
+        self.update_event = None
+
+    def on_enter(self):
+        print("GraphScreen entered")
         Clock.schedule_once(self.add_graph_to_layout)
-        self.update_interval = 1.7  # Update interval in seconds
-        Clock.schedule_interval(self.update_data, self.update_interval)
+        self.update_event = Clock.schedule_interval(self.update_data, self.update_interval)
+
+    def on_leave(self):
+        print("GraphScreen left")
+        if self.update_event:
+            self.update_event.cancel()
 
     def add_graph_to_layout(self, dt):
-        if self.graph_layout:
+        if self.graph_layout and not self.graph_layout.children:
             self.graph_layout.add_widget(self.graph)
 
     def update_data(self, dt):
@@ -63,10 +72,10 @@ class GraphScreen(Screen):
                 self.plot_graph()
             else:
                 print("Data has not changed or no data fetched.")
-                # Use dummy data for testing if the data has not changed
                 self.send_dummy_data()
         except Exception as e:
             print(f"Error fetching data: {e}")
+            self.send_dummy_data()
 
     def update_data_history(self, data):
         for key in DATA_KEYS:

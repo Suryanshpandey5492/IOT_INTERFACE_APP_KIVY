@@ -9,21 +9,40 @@ class Dashboard(Screen):
     current = StringProperty("0")
     power = StringProperty("0")
     energy = StringProperty("0")
+    update_interval = 10  # Update interval in seconds
 
     def __init__(self, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
-        Clock.schedule_once(self.update_data, 1)  # Schedule initial data update
-        Clock.schedule_interval(self.update_data, 10)  # Update data every 10 seconds
+        self.update_event = None  # To store the scheduled update event
+
+    def on_enter(self):
+        
+        self.start_update()
+
+    def on_leave(self):
+        self.stop_update()
+    
+    def start_update(self):
+        self.update_data(0)  # Initial immediate update
+        self.update_event = Clock.schedule_interval(self.update_data, self.update_interval)
+
+    def stop_update(self):
+        if self.update_event:
+            self.update_event.cancel()
+            self.update_event = None
 
     def update_data(self, dt):
-        data = fetch_data()
-        if data:
-            for key in DATA_KEYS:
-                if key in data:
-                    setattr(self, key.lower(), str(np.mean(data[key])))
-                else:
-                    print(f"Key '{key}' not found in API response.")
-        else:
-            print("Failed to fetch data.")
-
-#from Screens.sidebar import Sidebar
+        try:
+            data = fetch_data()
+            if data:
+                for key in DATA_KEYS:
+                    if key in data:
+                        # Assuming data[key] is a list or array of values
+                        avg_value = np.mean(data[key])
+                        setattr(self, key.lower(), str(avg_value))
+                    else:
+                        print(f"Key '{key}' not found in API response.")
+            else:
+                print("Failed to fetch data.")
+        except Exception as e:
+            print(f"Error fetching data: {e}")

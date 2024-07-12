@@ -3,6 +3,7 @@ import sys
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
+from kivy.clock import Clock
 
 # Add the root directory to the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -23,15 +24,27 @@ class MyApp(MDApp):
         self.theme_cls.primary_palette = "Blue"
 
         Builder.load_file('kv/login.kv')
+
+        self.sm = ScreenManager()
+        self.sm.add_widget(LoginScreen(name='login'))
+
+        # Schedule the loading of other screens after 1 seconds
+        Clock.schedule_once(self.load_other_screens, 1)
+
+        return self.sm
+
+    def load_other_screens(self, dt):
         Builder.load_file('kv/dashboard.kv')
         Builder.load_file('kv/graph.kv')
-        Builder.load_file('kv/sidebar.kv')  # Load the sidebar.kv file
+        Builder.load_file('kv/sidebar.kv')
 
-        sm = ScreenManager()
-        sm.add_widget(LoginScreen(name='login'))
-        sm.add_widget(Dashboard(name='dashboard'))
-        sm.add_widget(GraphScreen(name='graph'))
-        return sm
+        self.sm.add_widget(Dashboard(name='dashboard'))
+        self.sm.add_widget(GraphScreen(name='graph'))
+        #self.sm.add_widget(Sidebar(name='sidebar'))
+
+    # def on_start(self):
+    #     # Optional: You can use this method to switch to the login screen if needed
+    #     self.sm.current = 'login'
 
 if __name__ == '__main__':
     MyApp().run()
