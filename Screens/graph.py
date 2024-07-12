@@ -44,7 +44,7 @@ class GraphScreen(Screen):
         self.graph.add_plot(self.plot)
         self.data_history = {key: [] for key in DATA_KEYS}
         self.last_fetched_data = None
-        self.update_interval = 1 # Update interval in seconds
+        self.update_interval = 1  # Update interval in seconds
         self.update_event = None
 
     def on_enter(self):
@@ -72,10 +72,10 @@ class GraphScreen(Screen):
                 self.plot_graph()
             else:
                 print("Data has not changed or no data fetched.")
-                # Use dummy data for testing if the data has not changed
                 self.send_dummy_data()
         except Exception as e:
             print(f"Error fetching data: {e}")
+            self.send_dummy_data()
 
     def update_data_history(self, data):
         for key in DATA_KEYS:
