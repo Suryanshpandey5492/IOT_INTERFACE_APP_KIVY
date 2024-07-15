@@ -39,7 +39,8 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
                     if key in data:
                         # Assuming data[key] is a list or array of values
                         avg_value = np.mean(data[key])
-                        setattr(self, key.lower(), str(avg_value))
+                        truncated_value = round(avg_value, 3)
+                        setattr(self, key.lower(), str(truncated_value))
                     else:
                         print(f"Key '{key}' not found in API response.")
             else:

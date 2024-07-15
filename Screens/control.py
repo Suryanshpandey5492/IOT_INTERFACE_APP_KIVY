@@ -7,14 +7,14 @@ from kivy.properties import ObjectProperty
 
 from api import send_dummy_data  # Make sure this function is implemented to send data to your database
 
-class ControlScreen(Screen):
+class Control(Screen):
     voltage_input = ObjectProperty(None)
     current_input = ObjectProperty(None)
     power_input = ObjectProperty(None)
     energy_input = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ControlScreen, self).__init__(**kwargs)
+        super(Screen, self).__init__(**kwargs)
         self.layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
         
         # Voltage

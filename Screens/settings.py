@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty, StringProperty
 from api import set_device_id
 
-class SettingsScreen(Screen):
+class Settings(Screen):
     device_id_input = ObjectProperty(None)
     device_id = StringProperty("9lpqiYnhjfesPnWTvi3l")  # Default device ID
 

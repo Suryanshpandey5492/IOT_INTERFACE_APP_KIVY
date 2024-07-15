@@ -11,9 +11,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from Screens.login import LoginScreen
 from Screens.dashboard import Dashboard
 from Screens.graph import GraphScreen
-from Screens.sidebar import Sidebar  # Import the Sidebar widget from Screens
-from Screens.ControlScreen import ControlScreen  # Correct import for ControlScreen
-from custom_screen import CustomScreen  # Import CustomScreen from the new module
+from Screens.sidebar import Sidebar
+from Screens.control import Control 
+from Screens.settings import Settings 
+from custom_screen import CustomScreen 
 
 # Ensure the garden package path is added to sys.path
 garden_path = os.path.join(os.path.expanduser("~"), ".kivy", "garden")
@@ -39,13 +40,13 @@ class MyApp(MDApp):
         Builder.load_file('kv/dashboard.kv')
         Builder.load_file('kv/graph.kv')
         Builder.load_file('kv/sidebar.kv')
-        Builder.load_file('kv/ControlScreen.kv')
+        Builder.load_file('kv/control.kv')
         Builder.load_file('kv/settings.kv')  # Load the KV file for ControlScreen
 
         self.sm.add_widget(Dashboard(name='dashboard'))
         self.sm.add_widget(GraphScreen(name='graph'))
-        self.sm.add_widget(ControlScreen(name='control'))
-        self.sm.add_widget(ControlScreen(name='settings'))  # Add ControlScreen
+        self.sm.add_widget(Control(name='control'))
+        self.sm.add_widget(Settings(name='settings'))  # Add ControlScreen
 
     # def on_start(self):
     #     # Optional: You can use this method to switch to the login screen if needed
