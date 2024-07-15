@@ -1,0 +1,76 @@
+<ControlScreen>:
+    voltage_input: voltage_input
+    current_input: current_input
+    power_input: power_input
+    energy_input: energy_input
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Voltage (Current Value: 0):"
+            font_size: '18sp'
+            bold: True
+        
+        TextInput:
+            id: voltage_input
+            multiline: False
+            font_size: '16sp'
+            height: '40dp'
+            size_hint_y: None
+
+        Label:
+            text: "Current (Current Value: 0):"
+            font_size: '18sp'
+            bold: True
+        
+        TextInput:
+            id: current_input
+            multiline: False
+            font_size: '16sp'
+            height: '40dp'
+            size_hint_y: None
+
+        Label:
+            text: "Power (Current Value: 0):"
+            font_size: '18sp'
+            bold: True
+        
+        TextInput:
+            id: power_input
+            multiline: False
+            font_size: '16sp'
+            height: '40dp'
+            size_hint_y: None
+
+        Label:
+            text: "Energy (Current Value: 0):"
+            font_size: '18sp'
+            bold: True
+        
+        TextInput:
+            id: energy_input
+            multiline: False
+            font_size: '16sp'
+            height: '40dp'
+            size_hint_y: None
+
+        Button:
+            text: "Submit"
+            on_release: root.submit_data(self)
+            font_size: '18sp'
+            height: '50dp'
+            size_hint_y: None
+            background_color: [0.1, 0.5, 0.8, 1]
+            color: [1, 1, 1, 1]
+
+        Button:
+            text: "Back"
+            on_release: root.manager.current = root.manager.previous()  # Navigate to the previous screen
+            font_size: '18sp'
+            height: '50dp'
+            size_hint_y: None
+            background_color: [0.5, 0.5, 0.5, 1]
+            color: [1, 1, 1, 1]

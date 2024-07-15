@@ -1,0 +1,39 @@
+<SettingsScreen>:
+    device_id_input: device_id_input
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Enter Device ID:"
+            font_size: '20sp'
+            bold: True
+            color: [0, 0, 0, 1]  # Black color
+
+        TextInput:
+            id: device_id_input
+            multiline: False
+            text: root.device_id  # Default to current device ID
+            font_size: '18sp'
+            size_hint_y: None
+            height: '40dp'
+
+        Button:
+            text: "Save"
+            on_release: root.save_device_id()
+            size_hint_y: None
+            height: '50dp'
+            background_color: [0.1, 0.5, 0.8, 1]  # Blue color
+            color: [1, 1, 1, 1]  # White text color
+            font_size: '18sp'
+
+        Button:
+            text: "Back"
+            on_release: root.manager.current = root.manager.previous()  # Navigate to the previous screen
+            size_hint_y: None
+            height: '50dp'
+            background_color: [0.5, 0.5, 0.5, 1]  # Gray color
+            color: [1, 1, 1, 1]  # White text color
+            font_size: '18sp'

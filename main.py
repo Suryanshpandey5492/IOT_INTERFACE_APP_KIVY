@@ -12,6 +12,7 @@ from Screens.login import LoginScreen
 from Screens.dashboard import Dashboard
 from Screens.graph import GraphScreen
 from Screens.sidebar import Sidebar  # Import the Sidebar widget from Screens
+from Screens.ControlScreen import ControlScreen  # Correct import for ControlScreen
 
 # Ensure the garden package path is added to sys.path
 garden_path = os.path.join(os.path.expanduser("~"), ".kivy", "garden")
@@ -28,7 +29,7 @@ class MyApp(MDApp):
         self.sm = ScreenManager()
         self.sm.add_widget(LoginScreen(name='login'))
 
-        # Schedule the loading of other screens after 1 seconds
+        # Schedule the loading of other screens after 1 second
         Clock.schedule_once(self.load_other_screens, 1)
 
         return self.sm
@@ -37,10 +38,14 @@ class MyApp(MDApp):
         Builder.load_file('kv/dashboard.kv')
         Builder.load_file('kv/graph.kv')
         Builder.load_file('kv/sidebar.kv')
+        Builder.load_file('kv/ControlScreen.kv')
+        Builder.load_file('kv/settings.kv')  # Load the KV file for ControlScreen
 
         self.sm.add_widget(Dashboard(name='dashboard'))
         self.sm.add_widget(GraphScreen(name='graph'))
-        #self.sm.add_widget(Sidebar(name='sidebar'))
+        # self.sm.add_widget(Sidebar(name='sidebar'))
+        self.sm.add_widget(ControlScreen(name='ControlScreen'))
+        self.sm.add_widget(ControlScreen(name='settings'))  # Add ControlScreen
 
     # def on_start(self):
     #     # Optional: You can use this method to switch to the login screen if needed

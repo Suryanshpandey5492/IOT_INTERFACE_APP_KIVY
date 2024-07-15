@@ -1,7 +1,6 @@
 <Sidebar>:
     orientation: 'vertical'
-    size_hint_x: None
-    width: 200
+    size_hint_x: 0.3  # Adjust the sidebar width to be dynamic
     padding: [10, 10, 10, 10]
     spacing: 20
     canvas.before:
@@ -41,6 +40,26 @@
         MDRaisedButton:
             text: 'Graph'
             on_press: root.change_screen('graph')
+            md_bg_color: 0.121, 0.161, 0.216, 1
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_x: 1
+            size_hint_y: None
+            height: 50  # Adjust button height to match the design
+
+        MDRaisedButton:
+            text: 'Control'
+            on_press: root.change_screen('control')
+            md_bg_color: 0.121, 0.161, 0.216, 1
+            theme_text_color: 'Custom'
+            text_color: 1, 1, 1, 1
+            size_hint_x: 1
+            size_hint_y: None
+            height: 50  # Adjust button height to match the design
+
+        MDRaisedButton:
+            text: 'Settings'
+            on_press: root.change_screen('settings')
             md_bg_color: 0.121, 0.161, 0.216, 1
             theme_text_color: 'Custom'
             text_color: 1, 1, 1, 1

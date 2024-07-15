@@ -22,3 +22,8 @@ def send_dummy_data(data):
     except requests.RequestException as e:
         print(f"Error sending data: {e}")
         return None
+
+def set_device_id(new_device_id):
+    global DEVICE_ID
+    DEVICE_ID = new_device_id
+    print(f"Device ID changed to: {DEVICE_ID}")
