@@ -18,7 +18,7 @@ class LoginScreen(Screen):
     def on_enter(self):
         if not self.firebase_initialized:
             # Initialize Firebase
-            cred = credentials.Certificate("C:/Users/sampa/Desktop/Project/IoT_APP/kivy_examples-main/iotinteract-1a1b9-firebase-adminsdk-lynn1-c2a0d8520e.json")
+            cred = credentials.Certificate("C:/Users/jerry/kivy dev/iotinteract-1a1b9-firebase-adminsdk-lynn1-c2a0d8520e.json")
             firebase_admin.initialize_app(cred)
             self.firebase_initialized = True
         print("LoginScreen entered")

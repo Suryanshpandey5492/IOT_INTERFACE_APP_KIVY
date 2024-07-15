@@ -7,8 +7,8 @@ from kivy.uix.button import Button
 from api import fetch_data, send_dummy_data, DATA_KEYS
 import numpy as np
 from kivymd.uix.card import MDCard
-
-class GraphScreen(Screen):
+from custom_screen import CustomScreen 
+class GraphScreen(CustomScreen):
     graph_layout = ObjectProperty(None)
     selected_data_series = StringProperty('Voltage')  # Default selected series
     max_points = 100  # Maximum number of points to display on the graph

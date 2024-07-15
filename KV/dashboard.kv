@@ -14,13 +14,6 @@
             padding: '20dp'
             spacing: '20dp'
 
-            canvas.before:
-                Color:
-                    rgba: (242 / 255.0, 244 / 255.0, 246 / 255.0, 1)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
             MDLabel:
                 text: 'Dashboard'
                 font_style: 'H4'
@@ -39,6 +32,7 @@
                     size_hint: None, None
                     size: dp(200), dp(150)
                     md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    shadow_color: 0, 0, 0, 0.1
                     BoxLayout:
                         orientation: 'vertical'
                         padding: '10dp'
@@ -54,6 +48,7 @@
                     size_hint: None, None
                     size: dp(200), dp(150)
                     md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    shadow_color: 0, 0, 0, 0.1
                     BoxLayout:
                         orientation: 'vertical'
                         padding: '10dp'
@@ -69,6 +64,7 @@
                     size_hint: None, None
                     size: dp(200), dp(150)
                     md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    shadow_color: 0, 0, 0, 0.1
                     BoxLayout:
                         orientation: 'vertical'
                         padding: '10dp'
@@ -84,6 +80,7 @@
                     size_hint: None, None
                     size: dp(200), dp(150)
                     md_bg_color: 1, 1, 1, 1  # Explicitly set card background color to white
+                    shadow_color: 0, 0, 0, 0.1
                     BoxLayout:
                         orientation: 'vertical'
                         padding: '10dp'

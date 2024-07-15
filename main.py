@@ -13,6 +13,7 @@ from Screens.dashboard import Dashboard
 from Screens.graph import GraphScreen
 from Screens.sidebar import Sidebar  # Import the Sidebar widget from Screens
 from Screens.ControlScreen import ControlScreen  # Correct import for ControlScreen
+from custom_screen import CustomScreen  # Import CustomScreen from the new module
 
 # Ensure the garden package path is added to sys.path
 garden_path = os.path.join(os.path.expanduser("~"), ".kivy", "garden")
@@ -22,7 +23,7 @@ if garden_path not in sys.path:
 class MyApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.primary_palette = "Red"
 
         Builder.load_file('kv/login.kv')
 
@@ -43,8 +44,7 @@ class MyApp(MDApp):
 
         self.sm.add_widget(Dashboard(name='dashboard'))
         self.sm.add_widget(GraphScreen(name='graph'))
-        # self.sm.add_widget(Sidebar(name='sidebar'))
-        self.sm.add_widget(ControlScreen(name='ControlScreen'))
+        self.sm.add_widget(ControlScreen(name='control'))
         self.sm.add_widget(ControlScreen(name='settings'))  # Add ControlScreen
 
     # def on_start(self):
