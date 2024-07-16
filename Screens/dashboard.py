@@ -1,19 +1,21 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 from api import fetch_data, DATA_KEYS  # Ensure fetch_data and DATA_KEYS are correctly imported
 import numpy as np
 from custom_screen import CustomScreen  # Import CustomScreen from the new module
 
 class Dashboard(CustomScreen):  # Inherit from CustomScreen
+    error_message = ObjectProperty(None) 
     voltage = StringProperty("0")
     current = StringProperty("0")
     power = StringProperty("0")
     energy = StringProperty("0")
-    update_interval = 10  # Update interval in seconds
+    update_interval = 10  # Update interval in seconds 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.last_fetched_data = None
         self.update_event = None  # To store the scheduled update event
 
     def on_enter(self):
@@ -34,7 +36,10 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
     def update_data(self, dt):
         try:
             data = fetch_data()
-            if data:
+            if data and data != self.last_fetched_data:
+                self.last_fetched_data = data
+                self.error_message.text = ""  # Clear the error message
+
                 for key in DATA_KEYS:
                     if key in data:
                         # Assuming data[key] is a list or array of values
@@ -44,6 +49,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
                     else:
                         print(f"Key '{key}' not found in API response.")
             else:
-                print("Failed to fetch data.")
+                print("Data has not changed.")
+                self.error_message.text = "Data has not changed."
         except Exception as e:
             print(f"Error fetching data: {e}")

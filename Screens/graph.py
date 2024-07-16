@@ -4,12 +4,13 @@ from kivy.properties import ObjectProperty, StringProperty
 from kivy_garden.graph import Graph, LinePlot
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
-from api import fetch_data, send_dummy_data, DATA_KEYS
-import numpy as np
+from api import fetch_data, DATA_KEYS
 from kivymd.uix.card import MDCard
 from custom_screen import CustomScreen 
+
 class GraphScreen(CustomScreen):
     graph_layout = ObjectProperty(None)
+    error_message = ObjectProperty(None) 
     selected_data_series = StringProperty('Voltage')  # Default selected series
     max_points = 100  # Maximum number of points to display on the graph
 
@@ -68,14 +69,15 @@ class GraphScreen(CustomScreen):
             print(f"Fetched data: {data}")
             if data and data != self.last_fetched_data:
                 self.last_fetched_data = data
-                self.update_data_history(data)
-                self.plot_graph()
+                self.error_message.text = ""  # Clear the error message
             else:
-                print("Data has not changed or no data fetched.")
-                self.send_dummy_data()
+                print("Data has not changed.")
+                self.error_message.text = "Data has not changed."
+            self.update_data_history(data)
+            self.plot_graph()
         except Exception as e:
             print(f"Error fetching data: {e}")
-            self.send_dummy_data()
+            self.error_message.text = f"Error fetching data: {e}"
 
     def update_data_history(self, data):
         for key in DATA_KEYS:
@@ -99,24 +101,6 @@ class GraphScreen(CustomScreen):
                 self.graph.ymax += 0.1
         else:
             print(f"No data to plot for {selected_series}")
-
-    def send_dummy_data(self, dt=None):
-        data = {
-            "Voltage": [np.random.randint(200, 250) for _ in range(1)],  # Send only one new value per series
-            "Current": [np.random.uniform(2, 4) for _ in range(1)],
-            "Power": [np.random.uniform(90, 100) for _ in range(1)],
-            "Energy": [np.random.randint(60, 80) for _ in range(1)]
-        }
-        try:
-            status_code = send_dummy_data(data)
-            if status_code:
-                print(f"Status Code: {status_code}")
-                self.update_data_history(data)
-                self.plot_graph()
-            else:
-                print("Failed to send dummy data.")
-        except Exception as e:
-            print(f"Error sending dummy data: {e}")
 
     def update_selected_data_series(self, key):
         self.selected_data_series = key

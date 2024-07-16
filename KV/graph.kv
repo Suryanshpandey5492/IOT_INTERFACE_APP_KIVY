@@ -1,4 +1,5 @@
 <GraphScreen>:
+    error_message: error_message_label
     graph_layout: graph_layout
     BoxLayout:
         orientation: 'horizontal'
@@ -14,13 +15,21 @@
                 id: graph_layout
                 size_hint_y: 0.7  # Adjust as needed for your layout
                 padding: dp(10)
-            
+
+            MDLabel:
+                id: error_message_label
+                text: ""
+                theme_text_color: "Error"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+
             MDBoxLayout:
                 orientation: 'horizontal'
                 size_hint_y: 0.2  # Adjust as needed for your layout
                 padding: dp(10)
                 spacing: dp(10)
-
+                
                 MDLabel:
                     text: 'Select Data Series:'
                     size_hint_x: 0.3

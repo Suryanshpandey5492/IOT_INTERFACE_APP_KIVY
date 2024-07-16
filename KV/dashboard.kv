@@ -2,6 +2,7 @@
 #:import dp kivy.metrics.dp
 
 <Dashboard>:
+    error_message: error_message_label
     BoxLayout:
         orientation: 'horizontal'
 
@@ -92,3 +93,10 @@
                             text: root.energy
                             theme_text_color: 'Secondary'
 
+            MDLabel:
+                id: error_message_label
+                text: ""
+                theme_text_color: "Error"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
