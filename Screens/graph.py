@@ -110,7 +110,7 @@ class GraphScreen(CustomScreen):
     def open_dropdown(self, button):
         dropdown = DropDown()
         for key in DATA_KEYS:
-            btn = Button(text=key, size_hint_y=None, height=44)
+            btn = Button(text=key, size_hint_y=None, height=1)
             btn.bind(on_release=lambda btn: dropdown.select(btn.text))
             dropdown.add_widget(btn)
         dropdown.bind(on_select=lambda instance, x: setattr(button, 'text', x))

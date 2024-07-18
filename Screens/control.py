@@ -1,9 +1,10 @@
 from kivymd.uix.screen import MDScreen
 from kivy.properties import ObjectProperty
+from custom_screen import CustomScreen
 
 from api import send_dummy_data  
 
-class Control(MDScreen):
+class Control(CustomScreen):
     voltage_input = ObjectProperty(None)
     current_input = ObjectProperty(None)
     power_input = ObjectProperty(None)

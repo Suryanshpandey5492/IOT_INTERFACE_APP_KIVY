@@ -1,22 +1,25 @@
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.properties import StringProperty, ObjectProperty
+from kivy.core.window import Window
 from api import fetch_data, DATA_KEYS  # Ensure fetch_data and DATA_KEYS are correctly imported
 import numpy as np
 from custom_screen import CustomScreen  # Import CustomScreen from the new module
 
 class Dashboard(CustomScreen):  # Inherit from CustomScreen
     error_message = ObjectProperty(None) 
-    voltage = StringProperty("0")
-    current = StringProperty("0")
-    power = StringProperty("0")
-    energy = StringProperty("0")
+    voltage = StringProperty("N/A")
+    current = StringProperty("N/A")
+    power = StringProperty("N/A")
+    energy = StringProperty("N/A")
     update_interval = 10  # Update interval in seconds 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.last_fetched_data = None
         self.update_event = None  # To store the scheduled update event
+        Window.bind(on_resize=self.on_resize)
+        self.on_resize(Window, Window.width, Window.height)
 
     def on_enter(self):
         self.start_update()
@@ -53,3 +56,12 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
                 self.error_message.text = "Data has not changed."
         except Exception as e:
             print(f"Error fetching data: {e}")
+
+    def on_resize(self, window, width, height):
+        grid_layout = self.ids.grid_layout
+        if width < 800:
+            grid_layout.cols = 1
+        elif width < 1200:
+            grid_layout.cols = 2
+        else:
+            grid_layout.cols = 3
