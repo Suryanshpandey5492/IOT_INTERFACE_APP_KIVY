@@ -16,12 +16,12 @@ def fetch_data():
         return None
 
 def send_dummy_data(data):
-    data = {
-            "Voltage": [random.randint(200, 249)],  
-            "Current": [random.randint(200, 249)],
-            "Power": [random.randint(200, 249)],
-            "Energy": [random.randint(200, 249)]
-        }
+    # data = {
+    #         "Voltage": [random.randint(200, 249)],  
+    #         "Current": [random.randint(200, 249)],
+    #         "Power": [random.randint(200, 249)],
+    #         "Energy": [random.randint(200, 249)]
+    #     }
     try:
         response = requests.post(f"{API_URL}/updatedevicejson/{DEVICE_ID}/164/182/", json=data)
         response.raise_for_status()

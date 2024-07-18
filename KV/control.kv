@@ -1,76 +1,97 @@
-<ControlScreen>:
+<Control>:
     voltage_input: voltage_input
     current_input: current_input
     power_input: power_input
     energy_input: energy_input
 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 20
-        spacing: 20
-
-        Label:
-            text: "Voltage (Current Value: 0):"
-            font_size: '18sp'
-            bold: True
+    MDBoxLayout:
+        orientation: 'horizontal'
         
-        TextInput:
-            id: voltage_input
-            multiline: False
-            font_size: '16sp'
-            height: '40dp'
-            size_hint_y: None
+        Sidebar:  # Add the Sidebar on the left
+            size_hint_x: None
+            width: dp(200)
 
-        Label:
-            text: "Current (Current Value: 0):"
-            font_size: '18sp'
-            bold: True
-        
-        TextInput:
-            id: current_input
-            multiline: False
-            font_size: '16sp'
-            height: '40dp'
-            size_hint_y: None
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(20)
+            spacing: dp(20)
+            size_hint_y: 1
 
-        Label:
-            text: "Power (Current Value: 0):"
-            font_size: '18sp'
-            bold: True
-        
-        TextInput:
-            id: power_input
-            multiline: False
-            font_size: '16sp'
-            height: '40dp'
-            size_hint_y: None
+            MDLabel:
+                text: "Control Panel"
+                font_style: 'H4'
+                size_hint_y: None
+                height: self.texture_size[1] + dp(20)
+                halign: 'center'
+                valign: 'middle'
 
-        Label:
-            text: "Energy (Current Value: 0):"
-            font_size: '18sp'
-            bold: True
-        
-        TextInput:
-            id: energy_input
-            multiline: False
-            font_size: '16sp'
-            height: '40dp'
-            size_hint_y: None
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                size_hint: 1, 1
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-        Button:
-            text: "Submit"
-            on_release: root.submit_data(self)
-            font_size: '18sp'
-            height: '50dp'
-            size_hint_y: None
-            background_color: [0.1, 0.5, 0.8, 1]
-            color: [1, 1, 1, 1]
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(20)
+                    spacing: dp(20)
+                    size_hint: 1, 1
+                    elevation: 10
+                    shadow_color: 0, 0, 0, 0.1
 
-        Button:
-            text: "Back"
-            on_release: root.manager.current = root.manager.previous()  # Navigate to the previous screen
-            font_size: '18sp'
-            height: '50dp'
-            size_hint_y: None
-            background_color: [0.5, 0.5, 0.5, 1]
-            color: [1, 1, 1, 1]
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDLabel:
+                            text: "Upload values:"
+                            font_style: 'Subtitle1'
+                            halign: 'left'
+                            valign: 'top'
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: self.texture_size[1] + dp(20)
+                            color: 0.5, 0.5, 0.5, 1  # Subtle color
+                            padding: [dp(20), dp(10)]  # Padding above and to the left
+
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: 1
+                        spacing: dp(10)
+
+                        MDTextField:
+                            id: voltage_input
+                            hint_text: "Voltage"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDTextField:
+                            id: power_input
+                            hint_text: "Power"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDTextField:
+                            id: current_input
+                            hint_text: "Current"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDTextField:
+                            id: energy_input
+                            hint_text: "Energy"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDRaisedButton:
+                            text: "Submit"
+                            on_release: root.submit_data(self)
+                            font_size: '18sp'
+                            height: '50dp'
+                            md_bg_color: app.theme_cls.primary_color
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            size_hint_y: None
+                            size_hint_x: 1
