@@ -3,14 +3,14 @@
     graph_layout: graph_layout
     BoxLayout:
         orientation: 'horizontal'
-        
+
         Sidebar:
             size_hint_x: None
             width: dp(200)
-        
+
         BoxLayout:
             orientation: 'vertical'
-            
+
             MDBoxLayout:
                 id: graph_layout
                 size_hint_y: 0.7  # Adjust as needed for your layout
@@ -29,14 +29,14 @@
                 size_hint_y: 0.2  # Adjust as needed for your layout
                 padding: dp(10)
                 spacing: dp(10)
-                
+
                 MDLabel:
                     text: 'Select Data Series:'
                     size_hint_x: 0.3
 
                 MDRaisedButton:
                     id: dropdown_button
-                    text: 'Voltage'
+                    text: root.selected_data_series  # Display the selected data series
                     on_press: root.open_dropdown(self)
                     size_hint_x: 0.7
                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}

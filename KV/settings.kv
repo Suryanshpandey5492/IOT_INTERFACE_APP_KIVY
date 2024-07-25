@@ -1,39 +1,95 @@
-<SettingsScreen>:
-    device_id_input: device_id_input
+<Settings>:
+    read_api_input: read_api_input
+    write_api_input: write_api_input
+    update_interval_input: update_interval_input
 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 20
-        spacing: 20
+    MDBoxLayout:
+        orientation: 'horizontal'
 
-        Label:
-            text: "Enter Device ID:"
-            font_size: '20sp'
-            bold: True
-            color: [0, 0, 0, 1]  # Black color
+        Sidebar:  # Add the Sidebar on the left
+            size_hint_x: None
+            width: dp(200)
 
-        TextInput:
-            id: device_id_input
-            multiline: False
-            text: root.device_id  # Default to current device ID
-            font_size: '18sp'
-            size_hint_y: None
-            height: '40dp'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(20)
+            spacing: dp(20)
+            size_hint_y: 1
 
-        Button:
-            text: "Save"
-            on_release: root.save_device_id()
-            size_hint_y: None
-            height: '50dp'
-            background_color: [0.1, 0.5, 0.8, 1]  # Blue color
-            color: [1, 1, 1, 1]  # White text color
-            font_size: '18sp'
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: self.minimum_height
 
-        Button:
-            text: "Back"
-            on_release: root.manager.current = root.manager.previous()  # Navigate to the previous screen
-            size_hint_y: None
-            height: '50dp'
-            background_color: [0.5, 0.5, 0.5, 1]  # Gray color
-            color: [1, 1, 1, 1]  # White text color
-            font_size: '18sp'
+                MDLabel:
+                    text: "Settings"
+                    font_style: 'H4'
+                    halign: 'center'
+                    valign: 'middle'
+                    size_hint_x: 1
+                    size_hint_y: None
+                    height: self.texture_size[1] + dp(20)
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                size_hint: 1, 1
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(20)
+                    spacing: dp(20)
+                    size_hint: 1, 1
+                    elevation: 1
+                    shadow_color: 0, 0, 0, 0.1
+
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDLabel:
+                            text: "API Details"
+                            font_style: 'Subtitle1'
+                            halign: 'left'
+                            valign: 'top'
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: self.texture_size[1] + dp(20)
+                            color: 0.5, 0.5, 0.5, 1  # Subtle color
+                            padding: [dp(20), dp(10)]  # Padding above and to the left
+
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: 1
+                        spacing: dp(10)
+
+                        MDTextField:
+                            id: read_api_input
+                            hint_text: "Read API URL"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDTextField:
+                            id: write_api_input
+                            hint_text: "Write API URL"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDTextField:
+                            id: update_interval_input
+                            hint_text: "Update Interval (seconds)"
+                            font_size: '16sp'
+                            size_hint_x: 1
+
+                        MDRaisedButton:
+                            text: "Save"
+                            on_release: root.save_api_details()
+                            font_size: '18sp'
+                            size_hint_y: None
+                            size_hint_x: 1
+                            md_bg_color: app.theme_cls.primary_color
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1

@@ -36,7 +36,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
         self.stop_update()
 
     def start_update(self):
-        self.update_data(0)  # Initial immediate update
+        self.update_data()  # Initial immediate update
         self.update_event = Clock.schedule_interval(self.update_data, self.update_interval)
 
     def stop_update(self):
@@ -44,7 +44,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
             self.update_event.cancel()
             self.update_event = None
 
-    def update_data(self, dt):
+    def update_data(self):
         try:
             data = fetch_data()
             if data and data != self.last_fetched_data:
@@ -89,3 +89,5 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
             box_layout.add_widget(value_label)
             card.add_widget(box_layout)
             grid_layout.add_widget(card)
+
+
