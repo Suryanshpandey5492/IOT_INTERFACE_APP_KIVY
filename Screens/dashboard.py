@@ -21,7 +21,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
         # Dynamically create properties for each key in DATA_KEYS
         self.data_properties = {}
         for key in DATA_KEYS:
-            prop = StringProperty("-")
+            prop = StringProperty("N/A")
             self.data_properties[key.lower()] = prop
             setattr(self.__class__, key.lower(), prop)
 
@@ -36,7 +36,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
         self.stop_update()
 
     def start_update(self):
-        self.update_data()  # Initial immediate update
+        self.update_data(0)  # Initial immediate update
         self.update_event = Clock.schedule_interval(self.update_data, self.update_interval)
 
     def stop_update(self):
@@ -44,19 +44,18 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
             self.update_event.cancel()
             self.update_event = None
 
-    def update_data(self):
+    def update_data(self, dt):
         try:
             data = fetch_data()
             if data and data != self.last_fetched_data:
                 self.last_fetched_data = data
                 self.error_message.text = ""  # Clear the error message
-
                 for key in DATA_KEYS:
                     if key in data:
                         # Assuming data[key] is a list or array of values
                         avg_value = np.mean(data[key])
                         truncated_value = round(avg_value, 3)
-                        setattr(self, key.lower(), str(truncated_value))
+                        self.data_properties[key.lower()] = str(truncated_value)
                     else:
                         print(f"Key '{key}' not found in API response.")
             else:
@@ -64,6 +63,7 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
                 self.error_message.text = "Data has not changed."
         except Exception as e:
             print(f"Error fetching data: {e}")
+            self.error_message.text = f"Error: {str(e)}"
 
     def on_resize(self, window, width, height):
         grid_layout = self.ids.grid_layout
@@ -81,13 +81,11 @@ class Dashboard(CustomScreen):  # Inherit from CustomScreen
         for key in DATA_KEYS:
             card = MDCard(size_hint=(None, None), size=(200, 150), md_bg_color=(1, 1, 1, 1), shadow_color=(0, 0, 0, 0.1))
             box_layout = BoxLayout(orientation='vertical', padding='10dp', spacing='10dp')
-            
+
             title_label = MDLabel(text=f'{key.capitalize()}:', theme_text_color='Primary')
-            value_label = MDLabel(text=self.data_properties[key.lower()].__get__(self), theme_text_color='Secondary')
-            
+            value_label = MDLabel(text=self.data_properties[key.lower()], theme_text_color='Secondary')
+
             box_layout.add_widget(title_label)
             box_layout.add_widget(value_label)
             card.add_widget(box_layout)
             grid_layout.add_widget(card)
-
-
