@@ -40,9 +40,6 @@ def update_data_keys():
         global DATA_KEYS
         DATA_KEYS = list(data.keys())
         print(f"DATA_KEYS updated to: {DATA_KEYS}")
-        update_dashboard_screen()
-        update_graph_screen()
-
 
 
 # Example usage
