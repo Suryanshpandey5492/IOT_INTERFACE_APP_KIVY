@@ -25,7 +25,7 @@ This project is an example of an IoT application built using Kivy. It includes *
 #### Setup
 1. Clone repo:
 ```bash
-  git clone https://github.com/yourusername/IoT_APP.git
+  git clone https://github.com/Suryanshpandey5492/IOT_INTERFACE_APP_KIVY.git
 ```
 2. Activate virtual environment:
 ```bash
